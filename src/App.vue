@@ -1,17 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    {{ deckId }}
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      deckId: ''
+    }
+  },
+  created() {
+    axios
+      .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2')
+      .then(response => {
+        console.log(response)
+        this.deckId = response.data.deck_id
+      })
+      .catch(error => console.log(error))
   }
 }
 </script>
