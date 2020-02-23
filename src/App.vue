@@ -1,5 +1,6 @@
 <template>
   <div id="app">
+    <h1 class="title">BlackJack</h1>
     <div class="dealer">
       <p v-if="gamePlaying">Dealer: ?</p>
       <p v-else>Dealer: {{ dealerScore }}</p>
@@ -12,10 +13,6 @@
       </div>
     </div>
 
-    <div class="feedback">
-      <p v-if="!gamePlaying">{{ feedback }}</p>
-    </div>
-
     <div class="player">
       <p>Player: {{ playerScore }}</p>
       <div class="display">
@@ -23,6 +20,10 @@
           <img :src="card.image" alt="player card" />
         </div>
       </div>
+    </div>
+
+    <div class="feedback">
+      <p v-if="!gamePlaying">{{ feedback }}</p>
     </div>
 
     <div class="controls">
@@ -144,44 +145,65 @@ export default {
 </script>
 
 <style lang="scss">
+html {
+  height: 100vh;
+}
+
+body {
+  background: #333;
+  box-sizing: border-box;
+  height: 100vh;
+  margin: 0;
+}
+
+#app {
+  background: linear-gradient(190deg, lighten(green, 5%) 0%, darken(green, 10%) 100%);
+  flex-direction: column;
+  flex: auto;
+  height: 100vh;
+}
+
+.title {
+  margin: 0;
+  text-align: center;
+}
+
 .dealer,
 .player {
-  border: 1px solid;
-  padding: 1rem;
   min-height: 10rem;
-  text-align: center;
+  padding: 0 2rem;
 }
 
 .display {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .feedback {
-  display: flex;
   align-items: center;
+  background: blue;
+  display: flex;
+  flex: 1;
   justify-content: center;
-  border: 1px solid;
-  min-height: 100px;
 }
 
 .controls {
-  border: 1px solid;
   display: flex;
   justify-content: center;
+  padding: 2rem;
 }
 
 img {
   margin-left: 0.25rem;
-  max-height: 9rem;
+  max-height: 6rem;
 }
 
 button {
-  border: 1px solid black;
-  padding: 1rem;
   border-radius: 5px;
+  border: 1px solid black;
   cursor: pointer;
-  margin: 0.5rem;
+  margin: 0 0.5rem;
+  min-width: 5rem;
+  padding: 1rem;
 }
 </style>
