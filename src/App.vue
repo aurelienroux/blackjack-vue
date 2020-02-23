@@ -9,12 +9,14 @@
       </div>
     </div>
 
+    <p>score {{ playerScore }}</p>
+
     <button @click="newHand">New hand</button>
-    <button @click="hitMe" :disabled="!gamePlaying">Hit me</button>
+    <button @click="hitMePlayer" :disabled="!gamePlaying">Hit me</button>
     <button @click="stay" :disabled="!gamePlaying">I stay</button>
     <p>game playing {{ gamePlaying }}</p>
+    {{ feedback }}
 
-    <p>score {{ playerScore }}</p>
     <div class="player-section">
       <div v-for="(card, index) in playerCards" :key="index">
         <img :src="card.image" alt="player card" />
@@ -31,12 +33,13 @@ export default {
   data() {
     return {
       deckId: '',
-      gamePlaying: true,
       playerCards: [],
       playerScore: 0,
       dealerCards: [],
       dealerScore: 0,
-      dealerPlay: false
+      gamePlaying: true,
+      dealerPlay: false,
+      feedback: 'playing'
     }
   },
   methods: {
@@ -62,11 +65,12 @@ export default {
     },
     newHand() {
       axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(res => {
-        this.gamePlaying = true
         this.playerCards = []
         this.dealerCards = []
         this.playerScore = 0
         this.dealerScore = 0
+        this.gamePlaying = true
+        this.dealerPlay = false
 
         this.playerCards.push(res.data.cards[0], res.data.cards[2])
         this.dealerCards.push(res.data.cards[1], res.data.cards[3])
@@ -75,30 +79,50 @@ export default {
         this.dealerScore = this.computeScore(this.dealerCards, this.dealerScore)
       })
     },
-    hitMe() {
+    hitMePlayer() {
       axios
         .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
-        .then(response => {
-          const [card] = response.data.cards
+        .then(res => {
+          const [card] = res.data.cards
 
           this.playerCards.push(card)
           this.playerScore = this.computeScore(this.playerCards, this.playerScore)
 
           if (this.playerScore > 21) {
             this.gamePlaying = false
+            this.feedback = 'You lost'
           }
+        })
+        .catch(error => console.log(error))
+    },
+    hitMeDealer() {
+      axios
+        .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
+        .then(res => {
+          const [card] = res.data.cards
+
+          this.dealerCards.push(card)
+          this.dealerScore = this.computeScore(this.dealerCards, this.dealerScore)
+
+          this.stay()
         })
         .catch(error => console.log(error))
     },
     stay() {
       this.dealerPlay = true
+
+      if (this.dealerScore < 17) {
+        setTimeout(() => {
+          this.hitMeDealer()
+        }, 1000)
+      }
     }
   },
   created() {
     axios
-      .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=2')
-      .then(response => {
-        this.deckId = response.data.deck_id
+      .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+      .then(res => {
+        this.deckId = res.data.deck_id
       })
       .catch(error => console.log(error))
   }
@@ -112,10 +136,11 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: 1rem;
+  min-height: 10rem;
 }
 
 img {
-  margin: 0.25rem;
-  max-height: 120px;
+  margin-left: 0.5rem;
+  max-height: 9rem;
 }
 </style>
