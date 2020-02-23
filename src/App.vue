@@ -8,7 +8,8 @@
     </div>
 
     <button @click="newHand">New hand</button>
-    <button @click="hitMe">Hit me</button>
+    <button @click="hitMe" :disabled="!gamePlaying">Hit me</button>
+    <p>game playing {{ gamePlaying }}</p>
 
     <p>score {{ playerScore }}</p>
     <div class="player-section">
@@ -27,6 +28,7 @@ export default {
   data() {
     return {
       deckId: '',
+      gamePlaying: true,
       playerCards: [],
       playerScore: 0,
       dealerCards: [],
@@ -34,45 +36,18 @@ export default {
     }
   },
   methods: {
-    newHand() {
-      axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(response => {
-        this.playerCards = []
-        this.playerScore = 0
-        this.dealerCards = []
-        this.dealerScore = 0
-
-        const cards = response.data.cards
-
-        cards.forEach((card, index) => {
-          if (index % 2 === 0) {
-            this.dealerCards.push(card)
-
-            if (card.value === 'ACE') {
-              this.dealerScore += 11
-            } else if (card.value === 'JACK' || card.value === 'QUEEN' || card.value === 'KING') {
-              this.dealerScore += 10
-            } else {
-              this.dealerScore += Number(card.value)
-            }
-          } else {
-            this.playerCards.push(card)
-
-            if (card.value === 'ACE') {
-              this.playerScore += 11
-            } else if (card.value === 'JACK' || card.value === 'QUEEN' || card.value === 'KING') {
-              this.playerScore += 10
-            } else {
-              this.playerScore += Number(card.value)
-            }
-          }
-        })
-      })
-    },
-    hitMe() {
-      axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`).then(response => {
-        const [card] = response.data.cards
+    dealCard(card, person) {
+      if (person === 'dealer') {
+        this.dealerCards.push(card)
+        if (card.value === 'ACE') {
+          this.dealerScore += 11
+        } else if (card.value === 'JACK' || card.value === 'QUEEN' || card.value === 'KING') {
+          this.dealerScore += 10
+        } else {
+          this.dealerScore += Number(card.value)
+        }
+      } else {
         this.playerCards.push(card)
-
         if (card.value === 'ACE') {
           this.playerScore += 11
         } else if (card.value === 'JACK' || card.value === 'QUEEN' || card.value === 'KING') {
@@ -80,7 +55,37 @@ export default {
         } else {
           this.playerScore += Number(card.value)
         }
+      }
+    },
+    newHand() {
+      axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(response => {
+        this.gamePlaying = true
+        this.playerCards = []
+        this.dealerCards = []
+        this.playerScore = 0
+        this.dealerScore = 0
+
+        response.data.cards.forEach((card, index) => {
+          if (index % 2 === 0) {
+            this.dealCard(card, 'dealer')
+          } else {
+            this.dealCard(card, 'player')
+          }
+        })
       })
+    },
+    hitMe() {
+      axios
+        .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
+        .then(response => {
+          const [card] = response.data.cards
+          this.dealCard(card, 'player')
+
+          if (this.playerScore > 21) {
+            this.gamePlaying = false
+          }
+        })
+        .catch(error => console.log(error))
     }
   },
   created() {
