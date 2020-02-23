@@ -25,7 +25,7 @@
     </div>
     <div class="controls">
       <div class="controls__row">
-        <button @click="getNewDeck">New Deck</button>
+        <button @click="getNewDeck">New deck</button>
       </div>
       <div class="controls__row">
         <button @click="newHand">New hand</button>
@@ -73,15 +73,18 @@ export default {
 
       return score
     },
+    resetGame() {
+      this.playerCards = []
+      this.dealerCards = []
+      this.playerScore = 0
+      this.dealerScore = 0
+      this.gamePlaying = true
+      this.dealerPlayState = false
+      this.feedback = ''
+    },
     newHand() {
       axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(res => {
-        this.playerCards = []
-        this.dealerCards = []
-        this.playerScore = 0
-        this.dealerScore = 0
-        this.gamePlaying = true
-        this.dealerPlayState = false
-        this.feedback = ''
+        this.resetGame()
 
         this.playerCards.push(res.data.cards[0], res.data.cards[2])
         this.dealerCards.push(res.data.cards[1], res.data.cards[3])
@@ -135,13 +138,7 @@ export default {
       }
     },
     getNewDeck() {
-      this.playerCards = []
-      this.dealerCards = []
-      this.playerScore = 0
-      this.dealerScore = 0
-      this.gamePlaying = true
-      this.dealerPlayState = false
-      this.feedback = ''
+      this.resetGame()
 
       axios
         .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6')
