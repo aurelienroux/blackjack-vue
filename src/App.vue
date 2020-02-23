@@ -116,7 +116,7 @@ export default {
             this.dealerPlay()
           }
         })
-        .catch(error => console.log(error))
+        .catch(error => console.error(error)) // eslint-disable-line no-console
     },
     dealerPlay() {
       this.gamePlaying = false
@@ -145,7 +145,7 @@ export default {
         .then(res => {
           this.deckId = res.data.deck_id
         })
-        .catch(error => console.log(error))
+        .catch(error => console.error(error)) // eslint-disable-line no-console
     }
   },
   created() {
@@ -154,7 +154,7 @@ export default {
       .then(res => {
         this.deckId = res.data.deck_id
       })
-      .catch(error => console.log(error))
+      .catch(error => console.error(error)) // eslint-disable-line no-console
   }
 }
 </script>
