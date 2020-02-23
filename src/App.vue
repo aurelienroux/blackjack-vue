@@ -160,8 +160,8 @@ body {
   color: #eee;
   flex-direction: column;
   flex: auto;
-  font-size: 0.9rem;
   font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
   min-height: 100%;
 }
 
@@ -174,8 +174,8 @@ body {
 
 .dealer,
 .player {
-  padding: 0 2rem;
   margin-bottom: 1rem;
+  padding: 0 2rem;
 
   p {
     margin: 0.5rem 0 0.25rem;
@@ -185,14 +185,16 @@ body {
 .display {
   display: flex;
   flex-wrap: wrap;
+  min-height: 6.5rem;
 }
 
 .feedback {
   align-items: center;
   display: flex;
   flex: 1;
+  font-size: 1.25rem;
   justify-content: center;
-  min-height: 3rem;
+  min-height: 4.5rem;
 }
 
 .controls {
