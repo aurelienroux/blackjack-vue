@@ -1,19 +1,20 @@
 <template>
   <div id="app">
-    <p>score {{ dealerScore }}</p>
+    <p v-if="!dealerPlayState">score: ?</p>
+    <p v-else>score: {{ dealerScore }}</p>
     <div class="dealer-section">
       <div v-for="(card, index) in dealerCards" :key="index">
-        <img v-if="index === 0 && !dealerPlay" src="@/assets/card.png" alt="" />
-        <img v-else-if="index === 0 && dealerPlay" :src="card.image" alt="" />
+        <img v-if="index === 0 && !dealerPlayState" src="@/assets/card.png" alt="" />
+        <img v-else-if="index === 0 && dealerPlayState" :src="card.image" alt="" />
         <img v-else :src="card.image" alt="dealer card" />
       </div>
     </div>
 
-    <p>score {{ playerScore }}</p>
+    <p>score: {{ playerScore }}</p>
 
     <button @click="newHand">New hand</button>
-    <button @click="hitMePlayer" :disabled="!gamePlaying">Hit me</button>
-    <button @click="stay" :disabled="!gamePlaying">I stay</button>
+    <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
+    <button @click="dealerPlay" :disabled="!gamePlaying">I stay</button>
     <p>game playing {{ gamePlaying }}</p>
     {{ feedback }}
 
@@ -38,7 +39,7 @@ export default {
       dealerCards: [],
       dealerScore: 0,
       gamePlaying: true,
-      dealerPlay: false,
+      dealerPlayState: false,
       feedback: 'playing'
     }
   },
@@ -70,7 +71,7 @@ export default {
         this.playerScore = 0
         this.dealerScore = 0
         this.gamePlaying = true
-        this.dealerPlay = false
+        this.dealerPlayState = false
 
         this.playerCards.push(res.data.cards[0], res.data.cards[2])
         this.dealerCards.push(res.data.cards[1], res.data.cards[3])
@@ -79,41 +80,37 @@ export default {
         this.dealerScore = this.computeScore(this.dealerCards, this.dealerScore)
       })
     },
-    hitMePlayer() {
+    hitMe(person) {
       axios
         .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
         .then(res => {
           const [card] = res.data.cards
 
-          this.playerCards.push(card)
-          this.playerScore = this.computeScore(this.playerCards, this.playerScore)
+          if (person === 'player') {
+            this.playerCards.push(card)
+            this.playerScore = this.computeScore(this.playerCards, this.playerScore)
 
-          if (this.playerScore > 21) {
-            this.gamePlaying = false
-            this.feedback = 'You lost'
+            if (this.playerScore > 21) {
+              this.gamePlaying = false
+              this.feedback = 'You lost'
+            }
+          }
+
+          if (person === 'dealer') {
+            this.dealerCards.push(card)
+            this.dealerScore = this.computeScore(this.dealerCards, this.dealerScore)
+
+            this.dealerPlay()
           }
         })
         .catch(error => console.log(error))
     },
-    hitMeDealer() {
-      axios
-        .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
-        .then(res => {
-          const [card] = res.data.cards
-
-          this.dealerCards.push(card)
-          this.dealerScore = this.computeScore(this.dealerCards, this.dealerScore)
-
-          this.stay()
-        })
-        .catch(error => console.log(error))
-    },
-    stay() {
-      this.dealerPlay = true
+    dealerPlay() {
+      this.dealerPlayState = true
 
       if (this.dealerScore < 17) {
         setTimeout(() => {
-          this.hitMeDealer()
+          this.hitMe('dealer')
         }, 1000)
       }
     }
