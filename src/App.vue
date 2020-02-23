@@ -26,7 +26,7 @@
     <div class="controls">
       <button @click="newHand">New hand</button>
       <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-      <button @click="dealerPlay" :disabled="!gamePlaying">I stay</button>
+      <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
     </div>
   </div>
 </template>
@@ -97,7 +97,7 @@ export default {
 
             if (this.playerScore > 21) {
               this.gamePlaying = false
-              this.feedback = 'You busted'
+              this.feedback = 'Busted. You lost'
             }
           }
 
@@ -118,9 +118,9 @@ export default {
           this.hitMe('dealer')
         }, 1000)
       } else if (this.dealerScore > 21) {
-        this.feedback = 'dealer bust. you won'
+        this.feedback = 'Dealer busted. You won!'
       } else if (this.dealerScore > this.playerScore) {
-        this.feedback = 'you lost!'
+        this.feedback = 'You lost!'
       } else if (this.dealerScore === this.playerScore) {
         this.feedback = 'tie round'
       } else if (this.playerScore === 21) {
@@ -142,6 +142,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,500,900&display=swap');
+
 html {
   height: 100vh;
 }
@@ -155,21 +157,29 @@ body {
 
 #app {
   background: linear-gradient(190deg, lighten(green, 5%) 0%, darken(green, 10%) 100%);
+  color: #eee;
   flex-direction: column;
   flex: auto;
+  font-size: 0.9rem;
+  font-family: 'Playfair Display', serif;
   min-height: 100%;
 }
 
 .title {
+  font-size: 2.5rem;
   margin: 0;
-  padding: 1rem 0;
+  padding: 0.5rem 0;
   text-align: center;
 }
 
 .dealer,
 .player {
-  min-height: 10rem;
   padding: 0 2rem;
+  margin-bottom: 1rem;
+
+  p {
+    margin: 0.5rem 0 0.25rem;
+  }
 }
 
 .display {
@@ -188,7 +198,7 @@ body {
 .controls {
   display: flex;
   justify-content: center;
-  padding: 2rem;
+  padding: 0.5rem 2rem;
 }
 
 img {
@@ -200,8 +210,9 @@ button {
   border-radius: 5px;
   border: 1px solid black;
   cursor: pointer;
+  font-family: 'Playfair Display', serif;
   margin: 0 0.5rem;
   min-width: 5rem;
-  padding: 1rem;
+  padding: 0.75rem;
 }
 </style>
