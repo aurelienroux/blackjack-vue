@@ -12,7 +12,6 @@
         </div>
       </div>
     </div>
-
     <div class="player">
       <p>Player: {{ playerScore }}</p>
       <div class="display">
@@ -21,11 +20,9 @@
         </div>
       </div>
     </div>
-
     <div class="feedback">
       <p v-if="!gamePlaying">{{ feedback }}</p>
     </div>
-
     <div class="controls">
       <button @click="newHand">New hand</button>
       <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
@@ -160,11 +157,12 @@ body {
   background: linear-gradient(190deg, lighten(green, 5%) 0%, darken(green, 10%) 100%);
   flex-direction: column;
   flex: auto;
-  height: 100vh;
+  min-height: 100%;
 }
 
 .title {
   margin: 0;
+  padding: 1rem 0;
   text-align: center;
 }
 
@@ -181,10 +179,10 @@ body {
 
 .feedback {
   align-items: center;
-  background: blue;
   display: flex;
   flex: 1;
   justify-content: center;
+  min-height: 3rem;
 }
 
 .controls {
