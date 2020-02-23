@@ -24,9 +24,14 @@
       <p v-if="!gamePlaying">{{ feedback }}</p>
     </div>
     <div class="controls">
-      <button @click="newHand">New hand</button>
-      <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-      <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
+      <div class="controls__row">
+        <button @click="getNewDeck">New Deck</button>
+      </div>
+      <div class="controls__row">
+        <button @click="newHand">New hand</button>
+        <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
+        <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
+      </div>
     </div>
   </div>
 </template>
@@ -122,12 +127,28 @@ export default {
       } else if (this.dealerScore > this.playerScore) {
         this.feedback = 'You lost!'
       } else if (this.dealerScore === this.playerScore) {
-        this.feedback = 'tie round'
+        this.feedback = 'Tie round'
       } else if (this.playerScore === 21) {
         this.feedback = 'BlackJack! you won!'
       } else {
         this.feedback = 'You won!'
       }
+    },
+    getNewDeck() {
+      this.playerCards = []
+      this.dealerCards = []
+      this.playerScore = 0
+      this.dealerScore = 0
+      this.gamePlaying = true
+      this.dealerPlayState = false
+      this.feedback = ''
+
+      axios
+        .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6')
+        .then(res => {
+          this.deckId = res.data.deck_id
+        })
+        .catch(error => console.log(error))
     }
   },
   created() {
@@ -199,8 +220,15 @@ body {
 
 .controls {
   display: flex;
-  justify-content: center;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
   padding: 0.5rem 2rem;
+
+  &__row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
 }
 
 img {
@@ -213,7 +241,7 @@ button {
   border: 1px solid black;
   cursor: pointer;
   font-family: 'Playfair Display', serif;
-  margin: 0 0.5rem;
+  margin: 0.5rem;
   min-width: 5rem;
   padding: 0.75rem;
 }
