@@ -1,26 +1,34 @@
 <template>
   <div id="app">
-    <p v-if="gamePlaying">score: ?</p>
-    <p v-else>score: {{ dealerScore }}</p>
-    <div class="dealer-section">
-      <div v-for="(card, index) in dealerCards" :key="index">
-        <img v-if="index === 0 && gamePlaying" src="@/assets/card.png" alt="" />
-        <img v-else-if="index === 0 && !gamePlaying" :src="card.image" alt="" />
-        <img v-else :src="card.image" alt="dealer card" />
+    <div class="dealer">
+      <p v-if="gamePlaying">Dealer: ?</p>
+      <p v-else>Dealer: {{ dealerScore }}</p>
+      <div class="display">
+        <div v-for="(card, index) in dealerCards" :key="index">
+          <img v-if="index === 0 && gamePlaying" src="@/assets/card.png" alt="" />
+          <img v-else-if="index === 0 && !gamePlaying" :src="card.image" alt="" />
+          <img v-else :src="card.image" alt="dealer card" />
+        </div>
       </div>
     </div>
 
-    <p>score: {{ playerScore }}</p>
+    <div class="feedback">
+      <p v-if="!gamePlaying">{{ feedback }}</p>
+    </div>
 
-    <button @click="newHand">New hand</button>
-    <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-    <button @click="dealerPlay" :disabled="!gamePlaying">I stay</button>
-    <p v-if="!gamePlaying">feedback: {{ feedback }}</p>
-
-    <div class="player-section">
-      <div v-for="(card, index) in playerCards" :key="index">
-        <img :src="card.image" alt="player card" />
+    <div class="player">
+      <p>Player: {{ playerScore }}</p>
+      <div class="display">
+        <div v-for="(card, index) in playerCards" :key="index">
+          <img :src="card.image" alt="player card" />
+        </div>
       </div>
+    </div>
+
+    <div class="controls">
+      <button @click="newHand">New hand</button>
+      <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
+      <button @click="dealerPlay" :disabled="!gamePlaying">I stay</button>
     </div>
   </div>
 </template>
@@ -117,14 +125,16 @@ export default {
         this.feedback = 'you lost!'
       } else if (this.dealerScore === this.playerScore) {
         this.feedback = 'tie round'
+      } else if (this.playerScore === 21) {
+        this.feedback = 'BlackJack! you won!'
       } else {
-        this.feedback = 'you won!'
+        this.feedback = 'You won!'
       }
     }
   },
   created() {
     axios
-      .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1')
+      .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6')
       .then(res => {
         this.deckId = res.data.deck_id
       })
@@ -134,17 +144,44 @@ export default {
 </script>
 
 <style lang="scss">
-.dealer-section,
-.player-section {
+.dealer,
+.player {
   border: 1px solid;
-  display: flex;
-  flex-wrap: wrap;
   padding: 1rem;
   min-height: 10rem;
+  text-align: center;
+}
+
+.display {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid;
+  min-height: 100px;
+}
+
+.controls {
+  border: 1px solid;
+  display: flex;
+  justify-content: center;
 }
 
 img {
-  margin-left: 0.5rem;
+  margin-left: 0.25rem;
   max-height: 9rem;
+}
+
+button {
+  border: 1px solid black;
+  padding: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 0.5rem;
 }
 </style>
