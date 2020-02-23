@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <p v-if="!dealerPlayState">score: ?</p>
+    <p v-if="gamePlaying">score: ?</p>
     <p v-else>score: {{ dealerScore }}</p>
     <div class="dealer-section">
       <div v-for="(card, index) in dealerCards" :key="index">
-        <img v-if="index === 0 && !dealerPlayState" src="@/assets/card.png" alt="" />
-        <img v-else-if="index === 0 && dealerPlayState" :src="card.image" alt="" />
+        <img v-if="index === 0 && gamePlaying" src="@/assets/card.png" alt="" />
+        <img v-else-if="index === 0 && !gamePlaying" :src="card.image" alt="" />
         <img v-else :src="card.image" alt="dealer card" />
       </div>
     </div>
@@ -15,8 +15,7 @@
     <button @click="newHand">New hand</button>
     <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
     <button @click="dealerPlay" :disabled="!gamePlaying">I stay</button>
-    <p>game playing {{ gamePlaying }}</p>
-    {{ feedback }}
+    <p v-if="!gamePlaying">feedback: {{ feedback }}</p>
 
     <div class="player-section">
       <div v-for="(card, index) in playerCards" :key="index">
@@ -39,8 +38,7 @@ export default {
       dealerCards: [],
       dealerScore: 0,
       gamePlaying: true,
-      dealerPlayState: false,
-      feedback: 'playing'
+      feedback: ''
     }
   },
   methods: {
@@ -72,6 +70,7 @@ export default {
         this.dealerScore = 0
         this.gamePlaying = true
         this.dealerPlayState = false
+        this.feedback = ''
 
         this.playerCards.push(res.data.cards[0], res.data.cards[2])
         this.dealerCards.push(res.data.cards[1], res.data.cards[3])
@@ -92,7 +91,7 @@ export default {
 
             if (this.playerScore > 21) {
               this.gamePlaying = false
-              this.feedback = 'You lost'
+              this.feedback = 'You busted'
             }
           }
 
@@ -106,12 +105,20 @@ export default {
         .catch(error => console.log(error))
     },
     dealerPlay() {
-      this.dealerPlayState = true
+      this.gamePlaying = false
 
       if (this.dealerScore < 17) {
         setTimeout(() => {
           this.hitMe('dealer')
         }, 1000)
+      } else if (this.dealerScore > 21) {
+        this.feedback = 'dealer bust. you won'
+      } else if (this.dealerScore > this.playerScore) {
+        this.feedback = 'you lost!'
+      } else if (this.dealerScore === this.playerScore) {
+        this.feedback = 'tie round'
+      } else {
+        this.feedback = 'you won!'
       }
     }
   },
