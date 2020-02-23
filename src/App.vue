@@ -4,7 +4,6 @@
     <div class="dealer-section">
       <div v-for="(card, index) in dealerCards" :key="index">
         <img :src="card.image" alt="" />
-        <p>{{ card.value }}</p>
       </div>
     </div>
 
