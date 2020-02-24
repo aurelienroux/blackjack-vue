@@ -196,6 +196,7 @@ body {
 }
 
 .title {
+  color: #0c450c;
   font-size: 2.5rem;
   margin: 0;
   padding: 0.5rem 0;
@@ -246,10 +247,10 @@ img {
 }
 
 button {
+  background: #292ba3;
   border-radius: 5px;
   border: none;
   color: #eee;
-  background: #292ba3;
   cursor: pointer;
   font-family: 'Playfair Display', serif;
   margin: 0.5rem;
