@@ -86,6 +86,7 @@ export default {
     },
     newHand() {
       this.loading = true
+      this.feedback = ''
 
       axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(res => {
         this.loading = false
