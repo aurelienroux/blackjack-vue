@@ -21,6 +21,7 @@
       </div>
     </div>
     <div class="feedback">
+      <p v-if="loading">Loading...</p>
       <p v-if="!gamePlaying">{{ feedback }}</p>
     </div>
     <div class="controls">
@@ -49,7 +50,8 @@ export default {
       dealerCards: [],
       dealerScore: 0,
       gamePlaying: true,
-      feedback: ''
+      feedback: '',
+      loading: false
     }
   },
   methods: {
@@ -83,7 +85,10 @@ export default {
       this.feedback = ''
     },
     newHand() {
+      this.loading = true
+
       axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(res => {
+        this.loading = false
         this.resetGame()
 
         this.playerCards.push(res.data.cards[0], res.data.cards[2])
@@ -94,9 +99,12 @@ export default {
       })
     },
     hitMe(person) {
+      this.loading = true
+
       axios
         .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
         .then(res => {
+          this.loading = false
           const [card] = res.data.cards
 
           if (person === 'player') {
@@ -139,10 +147,13 @@ export default {
     },
     getNewDeck() {
       this.resetGame()
+      this.loading = true
 
       axios
         .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6')
         .then(res => {
+          this.loading = false
+
           this.deckId = res.data.deck_id
         })
         .catch(error => console.error(error)) // eslint-disable-line no-console
