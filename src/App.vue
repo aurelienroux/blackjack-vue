@@ -235,7 +235,9 @@ img {
 
 button {
   border-radius: 5px;
-  border: 1px solid black;
+  border: none;
+  color: #eee;
+  background: #292ba3;
   cursor: pointer;
   font-family: 'Playfair Display', serif;
   margin: 0.5rem;
