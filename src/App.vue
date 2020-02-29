@@ -1,29 +1,9 @@
 <template>
   <div id="app">
     <h1 class="title">BlackJack</h1>
-    <div class="dealer">
-      <p v-if="gamePlaying">Dealer: ?</p>
-      <p v-else>Dealer: {{ dealerScore }}</p>
-      <div class="display">
-        <div v-for="(card, index) in dealerCards" :key="index">
-          <img v-if="index === 0 && gamePlaying" src="@/assets/card.png" alt="" />
-          <img v-else-if="index === 0 && !gamePlaying" :src="card.image" alt="" />
-          <img v-else :src="card.image" alt="dealer card" />
-        </div>
-      </div>
-    </div>
-    <div class="player">
-      <p>Player: {{ playerScore }}</p>
-      <div class="display">
-        <div v-for="(card, index) in playerCards" :key="index">
-          <img :src="card.image" alt="player card" />
-        </div>
-      </div>
-    </div>
-    <div class="feedback">
-      <p v-if="loading">Loading...</p>
-      <p v-if="!gamePlaying">{{ feedback }}</p>
-    </div>
+    <Dealer :gamePlaying="gamePlaying" :dealerScore="dealerScore" :dealerCards="dealerCards" />
+    <Player :playerScore="playerScore" :playerCards="playerCards" />
+    <Feedback :gamePlaying="gamePlaying" :loading="loading" :feedback="feedback" />
     <div class="controls">
       <div class="controls__row">
         <button @click="getNewDeck">New deck</button>
@@ -39,6 +19,9 @@
 
 <script>
 import axios from 'axios'
+import Dealer from '@/components/Dealer.vue'
+import Player from '@/components/Player.vue'
+import Feedback from '@/components/Feedback.vue'
 
 export default {
   name: 'App',
@@ -53,6 +36,11 @@ export default {
       feedback: '',
       loading: false
     }
+  },
+  components: {
+    Dealer,
+    Player,
+    Feedback
   },
   methods: {
     computeScore(cards, score) {
@@ -186,7 +174,7 @@ body {
 }
 
 #app {
-  background: linear-gradient(190deg, lighten(green, 5%) 0%, darken(green, 10%) 100%);
+  background: linear-gradient(190deg, lighten(green, 5%) 0%, darken(green, 5%) 100%);
   color: #eee;
   flex-direction: column;
   flex: auto;
@@ -201,31 +189,6 @@ body {
   margin: 0;
   padding: 0.5rem 0;
   text-align: center;
-}
-
-.dealer,
-.player {
-  margin-bottom: 1rem;
-  padding: 0 2rem;
-
-  p {
-    margin: 0.5rem 0 0.25rem;
-  }
-}
-
-.display {
-  display: flex;
-  flex-wrap: wrap;
-  min-height: 6.5rem;
-}
-
-.feedback {
-  align-items: center;
-  display: flex;
-  flex: 1;
-  font-size: 1.25rem;
-  justify-content: center;
-  min-height: 4.5rem;
 }
 
 .controls {
