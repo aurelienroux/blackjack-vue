@@ -184,11 +184,13 @@ body {
   flex: auto;
   font-family: $font-primary;
   font-size: 1rem;
+  min-height: 100vh;
 
   @include for-tablet-portrait-up {
     border-radius: 10px;
     margin: 0 auto;
     max-width: 40rem;
+    min-height: 0;
     padding: 2rem 2rem 4rem;
   }
 }
