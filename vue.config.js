@@ -8,5 +8,14 @@ module.exports = {
         `
       }
     }
+  },
+
+  pwa: {
+    name: 'Blackjack',
+    themeColor: '#037500',
+    msTileColor: '#037500',
+    manifestOptions: {
+      background_color: '#037500'
+    }
   }
 }
