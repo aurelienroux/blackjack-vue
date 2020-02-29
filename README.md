@@ -1,6 +1,6 @@
 # blackjack
 
-Simple blackjack game made in Vue as a PWA. demo [here](https://github.com/aurelienroux/blackjack-vue)
+Simple blackjack game made in Vue as a PWA. demo [here](https://blackjack-94c6f.firebaseapp.com/)
 
 ## Project setup
 
