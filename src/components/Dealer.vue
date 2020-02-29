@@ -33,5 +33,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   min-height: 6.5rem;
+
+  @include for-tablet-portrait-up {
+    min-height: 8.5rem;
+  }
 }
 </style>

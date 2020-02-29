@@ -162,6 +162,7 @@ export default {
 @import url('https://fonts.googleapis.com/css?family=Playfair+Display:400,500,900&display=swap');
 
 html {
+  box-sizing: border-box;
   height: 100vh;
 }
 
@@ -170,6 +171,10 @@ body {
   box-sizing: border-box;
   height: 100vh;
   margin: 0;
+
+  @include for-tablet-portrait-up {
+    padding: 2rem;
+  }
 }
 
 #app {
@@ -178,8 +183,14 @@ body {
   flex-direction: column;
   flex: auto;
   font-family: $font-primary;
-  font-size: 0.9rem;
-  min-height: 100%;
+  font-size: 1rem;
+
+  @include for-tablet-portrait-up {
+    border-radius: 10px;
+    margin: 0 auto;
+    max-width: 40rem;
+    padding: 2rem 2rem 4rem;
+  }
 }
 
 .title {
@@ -188,10 +199,18 @@ body {
   margin: 0;
   padding: 0.5rem 0;
   text-align: center;
+
+  @include for-tablet-portrait-up {
+    margin-bottom: 2rem;
+  }
 }
 
 img {
   margin-left: 0.25rem;
   max-height: 6rem;
+
+  @include for-tablet-portrait-up {
+    max-height: 8rem;
+  }
 }
 </style>

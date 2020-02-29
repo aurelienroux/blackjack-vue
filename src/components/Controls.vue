@@ -1,13 +1,9 @@
 <template>
   <div class="controls">
-    <div class="controls__row">
-      <button @click="getNewDeck">New deck</button>
-    </div>
-    <div class="controls__row">
-      <button @click="newHand">New hand</button>
-      <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-      <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
-    </div>
+    <button @click="getNewDeck">New deck</button>
+    <button @click="newHand">New hand</button>
+    <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
+    <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
   </div>
 </template>
 
@@ -36,13 +32,11 @@ export default {
 .controls {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: center;
   padding: 0.5rem 2rem;
 
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  @include for-tablet-portrait-up {
+    justify-content: flex-start;
   }
 }
 
@@ -53,7 +47,8 @@ button {
   color: $white;
   cursor: pointer;
   font-family: $font-primary;
-  margin: 0.5rem;
+  font-size: 0.8rem;
+  margin: 0.5rem 0.8rem;
   min-width: 5rem;
   padding: 0.75rem;
 
