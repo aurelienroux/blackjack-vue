@@ -4,24 +4,22 @@
     <Dealer :gamePlaying="gamePlaying" :dealerScore="dealerScore" :dealerCards="dealerCards" />
     <Player :playerScore="playerScore" :playerCards="playerCards" />
     <Feedback :gamePlaying="gamePlaying" :loading="loading" :feedback="feedback" />
-    <div class="controls">
-      <div class="controls__row">
-        <button @click="getNewDeck">New deck</button>
-      </div>
-      <div class="controls__row">
-        <button @click="newHand">New hand</button>
-        <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-        <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
-      </div>
-    </div>
+    <Controls
+      :gamePlaying="gamePlaying"
+      @getNewDeck="getNewDeck"
+      @newHand="newHand"
+      @hitMe="hitMe"
+      @dealerPlay="dealerPlay"
+    />
   </div>
 </template>
 
 <script>
 import axios from 'axios'
+import Controls from '@/components/Controls.vue'
 import Dealer from '@/components/Dealer.vue'
-import Player from '@/components/Player.vue'
 import Feedback from '@/components/Feedback.vue'
+import Player from '@/components/Player.vue'
 
 export default {
   name: 'App',
@@ -38,9 +36,10 @@ export default {
     }
   },
   components: {
+    Controls,
     Dealer,
-    Player,
-    Feedback
+    Feedback,
+    Player
   },
   methods: {
     computeScore(cards, score) {
@@ -191,33 +190,8 @@ body {
   text-align: center;
 }
 
-.controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
-  padding: 0.5rem 2rem;
-
-  &__row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-  }
-}
-
 img {
   margin-left: 0.25rem;
   max-height: 6rem;
-}
-
-button {
-  background: #292ba3;
-  border-radius: 5px;
-  border: none;
-  color: #eee;
-  cursor: pointer;
-  font-family: 'Playfair Display', serif;
-  margin: 0.5rem;
-  min-width: 5rem;
-  padding: 0.75rem;
 }
 </style>
