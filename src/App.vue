@@ -166,24 +166,24 @@ html {
 }
 
 body {
-  background: #333;
+  background: $background;
   box-sizing: border-box;
   height: 100vh;
   margin: 0;
 }
 
 #app {
-  background: linear-gradient(190deg, lighten(green, 5%) 0%, darken(green, 5%) 100%);
-  color: #eee;
+  background: linear-gradient(190deg, lighten($green, 5%) 0%, darken($green, 5%) 100%);
+  color: $white;
   flex-direction: column;
   flex: auto;
-  font-family: 'Playfair Display', serif;
+  font-family: $font-primary;
   font-size: 0.9rem;
   min-height: 100%;
 }
 
 .title {
-  color: #0c450c;
+  color: $green-title;
   font-size: 2.5rem;
   margin: 0;
   padding: 0.5rem 0;

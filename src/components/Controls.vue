@@ -47,18 +47,18 @@ export default {
 }
 
 button {
-  background: #292ba3;
+  background: $blue-button;
   border-radius: 5px;
   border: none;
-  color: #eee;
+  color: $white;
   cursor: pointer;
-  font-family: 'Playfair Display', serif;
+  font-family: $font-primary;
   margin: 0.5rem;
   min-width: 5rem;
   padding: 0.75rem;
 
   &:disabled {
-    background: lighten(#292ba3, 15%);
+    background: lighten($blue-button, 15%);
     cursor: not-allowed;
   }
 }
