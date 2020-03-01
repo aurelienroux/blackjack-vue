@@ -5,7 +5,7 @@
       <span class="small">Remaining cards in deck: {{ remainingCards }}</span>
     </div>
     <div>
-      <button @click="newHand">New hand</button>
+      <button class="button__red" @click="newHand">New hand</button>
       <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
       <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
     </div>

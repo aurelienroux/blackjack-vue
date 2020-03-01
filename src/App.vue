@@ -35,7 +35,7 @@ export default {
       dealerScore: 0,
       deckId: '',
       feedback: '',
-      gamePlaying: true,
+      gamePlaying: false,
       loading: false,
       playerCards: [],
       playerScore: 0,
