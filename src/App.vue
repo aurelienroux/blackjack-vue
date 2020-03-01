@@ -3,13 +3,19 @@
     <h1 class="title">BlackJack</h1>
     <Dealer :gamePlaying="gamePlaying" :dealerScore="dealerScore" :dealerCards="dealerCards" />
     <Player :playerScore="playerScore" :playerCards="playerCards" />
-    <Feedback :gamePlaying="gamePlaying" :loading="loading" :feedback="feedback" />
+    <Feedback
+      :feedback="feedback"
+      :gamePlaying="gamePlaying"
+      :loading="loading"
+      :remainingCards="remainingCards"
+    />
     <Controls
       :gamePlaying="gamePlaying"
-      @getNewDeck="getNewDeck"
-      @newHand="newHand"
-      @hitMe="hitMe"
+      :remainingCards="remainingCards"
       @dealerPlay="dealerPlay"
+      @getNewDeck="getNewDeck"
+      @hitMe="hitMe"
+      @newHand="newHand"
     />
   </div>
 </template>
@@ -25,14 +31,15 @@ export default {
   name: 'App',
   data() {
     return {
-      deckId: '',
-      playerCards: [],
-      playerScore: 0,
       dealerCards: [],
       dealerScore: 0,
-      gamePlaying: true,
+      deckId: '',
       feedback: '',
-      loading: false
+      gamePlaying: true,
+      loading: false,
+      playerCards: [],
+      playerScore: 0,
+      remainingCards: 0
     }
   },
   components: {
@@ -77,6 +84,7 @@ export default {
 
       axios.get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=4`).then(res => {
         this.loading = false
+        this.remainingCards = this.remainingCards - 4
         this.resetGame()
 
         this.playerCards.push(res.data.cards[0], res.data.cards[2])
@@ -88,6 +96,7 @@ export default {
     },
     hitMe(person) {
       this.loading = true
+      this.remainingCards = this.remainingCards - 1
 
       axios
         .get(`https://deckofcardsapi.com/api/deck/${this.deckId}/draw/?count=1`)
@@ -141,7 +150,7 @@ export default {
         .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6')
         .then(res => {
           this.loading = false
-
+          this.remainingCards = res.data.remaining
           this.deckId = res.data.deck_id
         })
         .catch(error => console.error(error)) // eslint-disable-line no-console
@@ -151,6 +160,7 @@ export default {
     axios
       .get('https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=6')
       .then(res => {
+        this.remainingCards = res.data.remaining
         this.deckId = res.data.deck_id
       })
       .catch(error => console.error(error)) // eslint-disable-line no-console

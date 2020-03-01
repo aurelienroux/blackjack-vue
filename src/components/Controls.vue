@@ -1,16 +1,21 @@
 <template>
   <div class="controls">
-    <button @click="getNewDeck">New deck</button>
-    <button @click="newHand">New hand</button>
-    <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-    <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
+    <div>
+      <button class="button__red" @click="getNewDeck">New deck</button>
+      <span class="small">Remaining cards in deck: {{ remainingCards }}</span>
+    </div>
+    <div>
+      <button @click="newHand">New hand</button>
+      <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
+      <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
   name: 'Controls',
-  props: ['gamePlaying'],
+  props: ['gamePlaying', 'remainingCards'],
   methods: {
     getNewDeck() {
       this.$emit('getNewDeck')
@@ -30,14 +35,7 @@ export default {
 
 <style lang="scss">
 .controls {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
   padding: 0.5rem 2rem;
-
-  @include for-tablet-portrait-up {
-    justify-content: flex-start;
-  }
 }
 
 button {
@@ -48,7 +46,7 @@ button {
   cursor: pointer;
   font-family: $font-primary;
   font-size: 0.8rem;
-  margin: 0.5rem 0.8rem;
+  margin: 0.5rem;
   min-width: 5rem;
   padding: 0.75rem;
 
@@ -56,5 +54,14 @@ button {
     background: lighten($blue-button, 15%);
     cursor: not-allowed;
   }
+
+  &.button__red {
+    background: $red-button;
+  }
+}
+
+.small {
+  font-size: 0.8rem;
+  margin-left: 1rem;
 }
 </style>

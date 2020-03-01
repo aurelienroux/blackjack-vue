@@ -20,5 +20,6 @@ export default {
   font-size: 1.25rem;
   justify-content: center;
   min-height: 4.5rem;
+  padding: 0 2.5rem;
 }
 </style>
