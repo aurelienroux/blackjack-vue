@@ -5,7 +5,7 @@
     <div class="display">
       <div v-for="(card, index) in dealerCards" :key="index">
         <img v-if="index === 0 && gamePlaying" src="@/assets/card.png" alt="" />
-        <img v-else-if="index === 0 && !gamePlaying" :src="card.image" alt="" />
+        <img v-else-if="index === 0 && !gamePlaying" :src="card.image" alt="dealer card" />
         <img v-else :src="card.image" alt="dealer card" />
       </div>
     </div>
