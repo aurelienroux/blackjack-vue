@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`App component renders App component 1`] = `
+<div id="app">
+  <h1 class="title">BlackJack</h1>
+  <dealer-stub dealercards="" dealerscore="0"></dealer-stub>
+  <player-stub playercards="" playerscore="0"></player-stub>
+  <feedback-stub feedback="" remainingcards="0"></feedback-stub>
+  <controls-stub remainingcards="0"></controls-stub>
+</div>
+`;
