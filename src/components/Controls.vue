@@ -1,13 +1,21 @@
 <template>
   <div class="controls">
     <div>
-      <button class="button__red" @click="getNewDeck">New deck</button>
-      <span class="small">Remaining cards in deck: {{ remainingCards }}</span>
+      <button class="button__red" @click="getNewDeck">
+        New deck
+      </button>
+      <span test-id="remaining" class="small"> Remaining cards in deck: {{ remainingCards }} </span>
     </div>
     <div>
-      <button class="button__red" @click="newHand">New hand</button>
-      <button @click="hitMe('player')" :disabled="!gamePlaying">Hit me</button>
-      <button @click="dealerPlay" :disabled="!gamePlaying">Stay</button>
+      <button class="button__red" @click="newHand">
+        New hand
+      </button>
+      <button @click="hitMe('player')" :disabled="!gamePlaying">
+        Hit me
+      </button>
+      <button @click="dealerPlay" :disabled="!gamePlaying">
+        Stay
+      </button>
     </div>
   </div>
 </template>
