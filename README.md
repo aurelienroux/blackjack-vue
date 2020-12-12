@@ -15,7 +15,7 @@ install dependencies
 npm install
 ```
 
-launch project
+launch project on local
 
 ```
 npm run serve
