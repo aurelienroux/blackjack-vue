@@ -3,12 +3,7 @@
     <h1 class="title">BlackJack</h1>
     <Dealer :gamePlaying="gamePlaying" :dealerScore="dealerScore" :dealerCards="dealerCards" />
     <Player :playerScore="playerScore" :playerCards="playerCards" />
-    <Feedback
-      :feedback="feedback"
-      :gamePlaying="gamePlaying"
-      :loading="loading"
-      :remainingCards="remainingCards"
-    />
+    <Feedback :feedback="feedback" :gamePlaying="gamePlaying" :loading="loading" />
     <Controls
       :gamePlaying="gamePlaying"
       :remainingCards="remainingCards"
