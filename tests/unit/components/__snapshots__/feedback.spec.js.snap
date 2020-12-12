@@ -1,0 +1,22 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Feedback component default state renders 1`] = `
+<div class="feedback">
+  <!---->
+  <p></p>
+</div>
+`;
+
+exports[`Feedback component game over renders 1`] = `
+<div class="feedback">
+  <!---->
+  <p>feedback text</p>
+</div>
+`;
+
+exports[`Feedback component loading renders 1`] = `
+<div class="feedback">
+  <p>Loading...</p>
+  <p></p>
+</div>
+`;
