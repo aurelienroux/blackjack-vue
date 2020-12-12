@@ -4,9 +4,9 @@ import Dealer from '@/components/Dealer.vue'
 function createLocalWrapper(gamePlaying = false, dealerScore = 0, dealerCards = []) {
   return shallowMount(Dealer, {
     propsData: {
-      gamePlaying: gamePlaying,
-      dealerScore: dealerScore,
-      dealerCards: dealerCards
+      gamePlaying,
+      dealerScore,
+      dealerCards
     }
   })
 }
@@ -44,7 +44,7 @@ describe('Dealer component', () => {
     })
   })
 
-  describe('playing game', () => {
+  describe('game on', () => {
     it('renders', () => {
       const wrapper = createLocalWrapper(true, 8, dealerCards)
       expect(wrapper).toMatchSnapshot()

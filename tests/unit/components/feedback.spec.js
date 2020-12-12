@@ -4,9 +4,9 @@ import Feedback from '@/components/Feedback.vue'
 function createLocalWrapper(loading = false, gamePlaying = false, feedback = '') {
   return shallowMount(Feedback, {
     propsData: {
-      loading: loading,
-      gamePlaying: gamePlaying,
-      feedback: feedback
+      loading,
+      gamePlaying,
+      feedback
     }
   })
 }

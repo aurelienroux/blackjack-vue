@@ -4,14 +4,14 @@ import Controls from '@/components/Controls.vue'
 function createLocalWrapper(gamePlaying) {
   return shallowMount(Controls, {
     propsData: {
-      gamePlaying: gamePlaying,
+      gamePlaying,
       remainingCards: 100
     }
   })
 }
 
 describe('Controls component', () => {
-  describe('with game on', () => {
+  describe('game on', () => {
     const wrapper = createLocalWrapper(true)
     it('renders', () => {
       expect(wrapper).toMatchSnapshot()
@@ -20,7 +20,7 @@ describe('Controls component', () => {
     })
   })
 
-  describe('with game off', () => {
+  describe('game over', () => {
     const wrapper = createLocalWrapper(false)
     it('renders', () => {
       expect(wrapper).toMatchSnapshot()

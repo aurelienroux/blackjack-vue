@@ -7,21 +7,21 @@ exports[`Dealer component default state renders 1`] = `
 </div>
 `;
 
-exports[`Dealer component game over renders 1`] = `
+exports[`Dealer component game on renders 1`] = `
 <div class="dealer">
-  <p>Dealer: 20</p>
+  <p>Dealer: ?</p>
   <div class="display">
-    <div><img src="https://deckofcardsapi.com/static/img/5C.png" alt="dealer card"></div>
+    <div><img src="@/assets/card.png" alt=""></div>
     <div><img src="https://deckofcardsapi.com/static/img/3S.png" alt="dealer card"></div>
   </div>
 </div>
 `;
 
-exports[`Dealer component playing game renders 1`] = `
+exports[`Dealer component game over renders 1`] = `
 <div class="dealer">
-  <p>Dealer: ?</p>
+  <p>Dealer: 20</p>
   <div class="display">
-    <div><img src="@/assets/card.png" alt=""></div>
+    <div><img src="https://deckofcardsapi.com/static/img/5C.png" alt="dealer card"></div>
     <div><img src="https://deckofcardsapi.com/static/img/3S.png" alt="dealer card"></div>
   </div>
 </div>
