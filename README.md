@@ -1,37 +1,22 @@
-# blackjack
+# Blackjack
 
-Simple blackjack game made in Vue as a PWA. demo [here](https://blackjack-94c6f.firebaseapp.com/)
+Blackjack game made in Vue as a PWA.  
+You can install on an [Android phone](https://support.google.com/chrome/answer/9658361?co=GENIE.Platform%3DAndroid&hl=en) by using Chrome and on [iOs](https://superpwa.com/doc/test-pwa-ios-devices/) with Safari.  
+Live demo can be played [here](https://aroux-blackjack.netlify.app/)
+
+![Screenshot](./public/img/blackjack.png)
+![Screenshot](./public/img/blackjack-won.png)
 
 ## Project setup
+
+install dependencies
 
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+launch project
 
 ```
 npm run serve
 ```
-
-### Compiles and minifies for production
-
-```
-npm run build
-```
-
-### Run your unit tests
-
-```
-npm run test:unit
-```
-
-### Lints and fixes files
-
-```
-npm run lint
-```
-
-### Customize configuration
-
-See [Configuration Reference](https://cli.vuejs.org/config/).
