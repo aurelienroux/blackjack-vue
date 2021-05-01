@@ -11,7 +11,7 @@
         New hand
       </button>
       <button @click="hitMe('player')" :disabled="!gamePlaying">
-        Hit me
+        Hit me!
       </button>
       <button @click="dealerPlay" :disabled="!gamePlaying">
         Stay
